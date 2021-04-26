@@ -20,6 +20,13 @@ steps:
 - task: NuGetCommand@2
   inputs:
     restoreSolution: '$(solution)'
+  
+- task: DotNetCoreCLI@2
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: True
 
 - task: VSBuild@1
   inputs:
@@ -28,15 +35,11 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'SD-PROD-basic (e5aaa710-031d-4126-898e-8548a4c8222a)'
     appType: 'webAppLinux'
     WebAppName: 'sd-acz-devops-csharp'
-    packageForLinux: '$(build.artifactStagingDirectory)/WebApp.zip'
+    packageForLinux: '$(build.artifactStagingDirectory)/**/*.zip'
     RuntimeStack: 'DOTNETCORE|5.0'
