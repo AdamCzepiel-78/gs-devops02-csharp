@@ -32,3 +32,11 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'SD-PROD-basic (e5aaa710-031d-4126-898e-8548a4c8222a)'
+    appType: 'webAppLinux'
+    WebAppName: 'sd-acz-devops-csharp'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    RuntimeStack: 'DOTNETCORE|5.0'
