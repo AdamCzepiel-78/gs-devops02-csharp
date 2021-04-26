@@ -28,13 +28,6 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: DotNetCoreCLI@2
-  inputs:
-    command: publish
-    publishWebProjects: True
-    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
-    zipAfterPublish: True
-
 - task: VSTest@2
   inputs:
     platform: '$(buildPlatform)'
@@ -45,5 +38,5 @@ steps:
     azureSubscription: 'SD-PROD-basic (e5aaa710-031d-4126-898e-8548a4c8222a)'
     appType: 'webAppLinux'
     WebAppName: 'sd-acz-devops-csharp'
-    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    packageForLinux: '$(build.artifactStagingDirectory)/WebApp.zip'
     RuntimeStack: 'DOTNETCORE|5.0'
