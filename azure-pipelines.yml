@@ -39,10 +39,11 @@ steps:
     azureSubscription: 'SD-PROD-basic (e5aaa710-031d-4126-898e-8548a4c8222a)'
     appName: 'sd-acz-devops-csharp'
     resourceGroupName: 'rg-sd-acz'
-    appSettings: |
-      "ConnectionStrings": {
-          "MvcMovieContext": "Server=tcp:sd-acz-deveops-dbserver.database.windows.net,1433;Initial Catalog=sd.acz-devops-dbmssql;Persist Security Info=False;User ID=aczepiel;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
-        },
+    connectionStrings: |
+        { 
+          "name": "MvcMovieContext",
+          "value": "Server=tcp:sd-acz-deveops-dbserver.database.windows.net,1433;Initial Catalog=sd.acz-devops-dbmssql;Persist Security Info=False;User ID=aczepiel;Password={your_password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+        }
 - task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
