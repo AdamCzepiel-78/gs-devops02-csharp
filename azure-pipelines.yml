@@ -27,6 +27,13 @@ steps:
     projects: '**/*.csproj'
     feedsToUse: 'select'
 
+- task: SonarCloudPrepare@1
+  inputs:
+    SonarCloud: 'SonarCloudToken'
+    organization: 'adamczepieldevops'
+    scannerMode: 'MSBuild'
+    projectKey: 'AdamCzepielDevops_Azure-Devops02-CSharp'
+    projectName: 'Azure-Devops02-CSharp'
 - task: DotNetCoreCLI@2
   displayName: 'Build .NET Core'
   inputs:
@@ -48,9 +55,15 @@ steps:
     publishWebProjects: true
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
     zipAfterPublish: true
-  
+
+- task: SonarCloudAnalyze@1
+
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
+
