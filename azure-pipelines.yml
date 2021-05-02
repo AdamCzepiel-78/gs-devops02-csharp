@@ -27,11 +27,6 @@ steps:
     projects: '**/*.csproj'
     feedsToUse: 'select'
 
-- task: MSBuild@1
-  inputs:
-    solution: 'Database1/Database1.sqlproj'
-    msbuildArguments: '/p OutDir=$(Build.ArtifactStagingDirectory)'
-
 - task: WhiteSource@21
   inputs:
     cwd: '$(System.DefaultWorkingDirectory)'
