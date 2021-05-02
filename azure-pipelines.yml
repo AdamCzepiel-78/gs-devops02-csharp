@@ -27,6 +27,11 @@ steps:
     projects: '**/*.csproj'
     feedsToUse: 'select'
 
+
+- task: WhiteSource@21
+  inputs:
+    cwd: '$(System.DefaultWorkingDirectory)'
+    projectName: 'Azure-Devops02-CSharp'
 - task: SonarCloudPrepare@1
   inputs:
     SonarCloud: 'SonarCloudToken'
