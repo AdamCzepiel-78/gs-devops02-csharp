@@ -36,9 +36,10 @@ steps:
   inputs:
     cwd: '$(System.DefaultWorkingDirectory)'
     projectName: 'Azure-Devops02-CSharp'
+
 - task: SonarCloudPrepare@1
   inputs:
-    SonarCloud: 'SonarCloudToken'
+    SonarCloud: 'SonarCloudToken1'
     organization: 'adamczepieldevops'
     scannerMode: 'MSBuild'
     projectKey: 'AdamCzepielDevops_Azure-Devops02-CSharp'
