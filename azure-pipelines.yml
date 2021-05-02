@@ -21,21 +21,33 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 - task: DotNetCoreCLI@2
+  displayName: 'Restore .NET Core'
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
     feedsToUse: 'select'
+
 - task: DotNetCoreCLI@2
+  displayName: 'Build .NET Core'
   inputs:
     command: 'build'
     arguments: '--configuration $(BuildConfiguration)'
     projects: '**/*.csproj'
   
 - task: DotNetCoreCLI@2
+  displayName: 'Test .NET Core'
+  inputs:
+    command: 'test'
+    projects: '**/*Test*/*.csproj'
+    arguments: '--configuration $(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish .NET Core'
   inputs:
     command: 'publish'
     publishWebProjects: true
-    arguments: '**/*csproj'
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    zipAfterPublish: true
   
 - task: PublishBuildArtifacts@1
   inputs:
